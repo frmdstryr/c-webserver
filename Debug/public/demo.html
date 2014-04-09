@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+<title>Page Title</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script
+	src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+	<style>
+	.ui-content {
+    padding: 0 !important;
+}
+
+	.ui-block-a .ui-collapsible-set,.ui-block-b .ui-collapsible-set {
+	    padding: 0 15px;
+	    margin: 0 !important;
+	}
+	</style>
+	<script type="text/javascript">
+		function TestBench(name,site,lab) {
+			return {
+				name: name,
+				site: site,
+				lab: lab
+			}
+		}
+		
+		function CampaignInfo(name,status) {
+            return {name: name,
+            	status:status,
+            	tests:[],
+            	// stats...
+            	numPass:0,
+            	numFail:0,
+            	numBlocked:0,
+            	numCrash:0 /// etc...
+            }
+        }
+		
+		function TestInfo(name,status,numPass,numFail,numBlocked,numCrash) {
+            return {name: name,
+                status:status,
+                numPass:numPass,
+                numFail:numFail,
+                numBlocked:numBlocked,
+                numCrash:numCrash /// etc...
+            }
+        }
+		
+		function Device(name) {
+			return {name: name,
+			}
+		}
+		
+		function TestBenchCtrl($scope) {
+			// TODO: load from svr
+			$scope.testbenches = [
+			   new TestBench('TB_01','ALT','10L-115'),
+		       new TestBench('TB_02','ALT','10L-115'),
+		       new TestBench('TB_03','ALT','10L-115'),
+		       new TestBench('TB_04','ALT','10L-115'),
+		       new TestBench('TB_05','MUC','A-303'),
+               new TestBench('TB_06','MUC','A-303'),
+               new TestBench('TB_07','SC','5A-13')
+		   ];
+		}
+	   function DeviceCtrl($scope) {
+		   // TODO: load from svr
+           $scope.devices = [
+                new Device('XMM7260'),
+               new Device('XMM7160'),
+               new Device('XMM7060'),
+               new Device('XMM6360')
+           ];
+       }
+	   
+	   function CampaignInfoCtrl($scope) {
+           // TODO: load from svr
+           $scope.campaigns = [
+                new CampaignInfo('STRESS_RACK_01','complete'),
+                new CampaignInfo('STRESS_RACK_01','complete'),
+                new CampaignInfo('STRESS_RACK_01','complete'),
+                new CampaignInfo('STRESS_RACK_01','complete'),
+           ];
+       }
+	   
+	   
+	   function TestInfoCtrl($scope) {
+           // TODO: load from svr
+           $scope.tests = [
+                new TestInfo('LTE_01_01','complete',2,0,0,0),
+                new TestInfo('LTE_01_02','complete',2,0,0,0),
+                new TestInfo('LTE_01_03','complete',1,0,1,0),
+                new TestInfo('LTE_01_04','complete',2,0,0,0),
+                new TestInfo('LTE_01_05','running',1,0,0,0),
+           ];
+       }
+	   
+	   
+	</script>
+</head>
+<body>
+	<div data-role="page">
+		<div data-role="header" data-theme="c">
+			<h1>Page Title</h1>
+		</div>
+		<!-- /header -->
+
+		<div data-role="content">
+			<div class="ui-grid-d">
+				<div class="ui-block-a">
+					<div data-role="collapsible-set" data-theme="b" data-content-theme="d" data-inset="false">
+						<div data-role="collapsible" ng-controller="TestBenchCtrl">
+							<h2>Benches</h2>
+							<ul data-role="listview" data-filter="true" data-filter-theme="c"
+								data-divider-theme="d" >
+								<li ng-repeat="testbench in testbenches">
+								    <a href="index.html">{{testbench.site}} {{testbench.lab}} {{testbench.name}}</a>
+								</li>
+							</ul>
+						</div>
+						<div data-role="collapsible" ng-controller="DeviceCtrl">
+                            <h2>Devices</h2>
+                            <ul data-role="listview" data-filter="true" data-filter-theme="c" data-divider-theme="d">
+                                <li ng-repeat="device in devices">
+                                    <a href="index.html">{{device.name}}
+                                    <span class="ui-li-count">2</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+						<div data-role="collapsible">
+							<h2>Formatted text</h2>
+							<ul data-role="listview" data-theme="d" data-divider-theme="d">
+								<li data-role="list-divider">Friday, October 8, 2010 <span
+									class="ui-li-count">2</span></li>
+								<li><a href="index.html"> 
+										<h3>Stephen Weber</h3> 
+										<p>
+											<strong>You've been invited to a meeting at Filament
+												Group in Boston, MA</strong>
+										</p> 
+										<p>Hey Stephen, if you're available at 10am tomorrow,
+											we've got a meeting with the jQuery team.</p> 
+										<p class="ui-li-aside">
+											<strong>6:24</strong>PM
+										</p> 
+								</a></li>
+								<li><a href="index.html"> 
+										<h3>jQuery Team</h3> 
+										<p>
+											<strong>Boston Conference Planning</strong>
+										</p> 
+										<p>In preparation for the upcoming conference in Boston,
+											we need to start gathering a list of sponsors and speakers.</p>
+										
+										<p class="ui-li-aside">
+											<strong>9:18</strong>AM
+										</p>
+								</a></li>
+							</ul>
+						</div>
+						<div data-role="collapsible">
+							<h2>Thumbnails and split button</h2>
+							<ul data-role="listview" data-split-icon="gear"
+								data-split-theme="d">
+								<li><a href="index.html"><img
+										src="../../_assets/img/album-bb.jpg"> 
+										<h3>Broken Bells</h3> 
+										<p>Broken Bells</p>  </a><a
+									href="lists-split-purchase.html" data-rel="dialog"
+									data-transition="slideup">Purchase album</a></li>
+								<li><a href="index.html"><img
+										src="../../_assets/img/album-hc.jpg"> 
+										<h3>Warning</h3> 
+										<p>Hot Chip</p>  </a><a
+									href="lists-split-purchase.html" data-rel="dialog"
+									data-transition="slideup">Purchase album</a></li>
+								<li><a href="index.html"> <img
+										src="../../_assets/img/album-p.jpg"> 
+										<h3>Wolfgang Amadeus Phoenix</h3> 
+										<p>Phoenix</p> 
+								</a><a href="lists-split-purchase.html" data-rel="dialog"
+									data-transition="slideup">Purchase album</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<div class="ui-block-b">
+					<div data-role="collapsible-set" data-theme="b" 
+						data-content-theme="d" data-inset="false">
+						<div data-role="collapsible" ng-controller="CampaignInfoCtrl">
+							<h2>Campaigns</h2>
+							<ul data-role="listview">
+							    
+							    <li ng-repeat="campaign in campaigns">
+							         <a>{{campaign.name}}</a>
+								</li>
+								
+							</ul>
+						</div>
+						<div data-role="collapsible">
+							<h2>Devices</h2>
+							<ul data-role="listview" data-theme="d" data-divider-theme="d">
+								<li data-role="list-divider">Friday, October 8, 2010 <span
+									class="ui-li-count">2</span></li>
+								<li><a href="index.html">
+										<h3>Stephen Weber</h3>
+										<p>
+											<strong>You've been invited to a meeting at Filament
+												Group in Boston, MA</strong>
+										</p>
+										<p>Hey Stephen, if you're available at 10am tomorrow,
+											we've got a meeting with the jQuery team.</p>
+										<p class="ui-li-aside">
+											<strong>6:24</strong>PM
+										</p>
+								</a></li>
+								<li><a href="index.html">
+										<h3>jQuery Team</h3>
+										<p>
+											<strong>Boston Conference Planning</strong>
+										</p>
+										<p>In preparation for the upcoming conference in Boston,
+											we need to start gathering a list of sponsors and speakers.</p>
+										<p class="ui-li-aside">
+											<strong>9:18</strong>AM
+										</p>
+								</a></li>
+								<li data-role="list-divider">Thursday, October 7, 2010 <span
+									class="ui-li-count">1</span></li>
+								<li><a href="index.html">
+										<h3>Avery Walker</h3>
+										<p>
+											<strong>Re: Dinner Tonight</strong>
+										</p>
+										<p>Sure, let's plan on meeting at Highland Kitchen at 8:00
+											tonight. Can't wait!</p>
+										<p class="ui-li-aside">
+											<strong>4:48</strong>PM
+										</p>
+								</a></li>
+								<li data-role="list-divider">Wednesday, October 6, 2010 <span
+									class="ui-li-count">3</span></li>
+								<li><a href="index.html">
+										<h3>Amazon.com</h3>
+										<p>
+											<strong>4-for-3 Books for Kids</strong>
+										</p>
+										<p>As someone who has purchased children's books from our
+											4-for-3 Store, you may be interested in these featured books.</p>
+										<p class="ui-li-aside">
+											<strong>12:47</strong>PM
+										</p>
+								</a></li>
+							</ul>
+						</div>
+						<div data-role="collapsible">
+							<h2>Contacts</h2>
+							<ul data-role="listview" data-autodividers="true" data-theme="d"
+								data-divider-theme="d">
+								<li><a href="index.html">Adam Kinkaid</a></li>
+								<li><a href="index.html">Alex Wickerham</a></li>
+								<li><a href="index.html">Avery Johnson</a></li>
+								<li><a href="index.html">Bob Cabot</a></li>
+								<li><a href="index.html">Caleb Booth</a></li>
+								<li><a href="index.html">Christopher Adams</a></li>
+								<li><a href="index.html">Culver James</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<div class="ui-block-c" style="width:60%" ng-controller="TestInfoCtrl">
+					<table data-role="table" id="table-custom-2" data-mode="columntoggle" class="ui-body-d ui-shadow table-stripe ui-responsive" data-column-btn-theme="b" data-column-btn-text="Columns to display..." data-column-popup-theme="a">
+						<thead>
+							<tr>
+								<th data-priority="1">Index</th>
+								<th data-priority="persist">Test</th>
+								<th data-priority="2">Status</th>
+								<th data-priority="3">Pass</th>
+								<th data-priority="4">Fail</th>
+								<th data-priority="5">Blocked</th>
+								<th data-priority="5">Crash</th>
+								<!-- Etc... should pull these from a model -->
+							</tr>
+						</thead>
+						<tbody>
+						    
+							<tr ng-repeat="test in tests">
+								<th>0</th>
+								<td>{{test.name}}</td>
+								<td>{{test.status}}</td>
+								<td>{{test.numPass}}</td>
+								<td>{{test.numFail}}</td>
+								<td>{{test.numBlocked}}</td>
+								<td>{{test.numCrash}}</td>
+							</tr>
+							
+						</tbody>
+					</table>
+				</div>
+				
+				<!-- <div class="ui-block-d">
+					<div class="ui-bar ui-bar-e" style="height: 60px">D</div>
+				</div>
+				
+				<div class="ui-block-e">
+					<div class="ui-bar ui-bar-e" style="height: 60px">E</div>
+				</div>
+				 -->
+			</div>
+			<!-- /grid-c -->
+		</div>
+		<!-- /content -->
+
+		<div data-role="footer" data-theme="c">
+			<h4>Page Footer</h4>
+		</div>
+		<!-- /footer -->
+	</div>
+	<!-- /page -->
+
+</body>
+</html>
